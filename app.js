@@ -164,5 +164,15 @@ router.route('/emps')
         });
     })
 
+router.route('/emps/:dept_id')
 
+    .get(function(req, res) {
+        Emp.find().populate('dept', 'deptname').exec(function (err, data) {
 
+            if (err)
+                res.send(err);
+            else
+                res.json(data);
+
+        })
+    })
