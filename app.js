@@ -1,7 +1,4 @@
 
-/**
- * Created by lenovo on 1/17/2017.
- */
 
 
 var express = require('express');
@@ -117,7 +114,8 @@ var server = app.listen(81, function () {
     console.log("Example app listening at http://%s:%s", host, port)
 
 });
-=======
+
+
 var express = require('express');
 var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
@@ -127,8 +125,10 @@ mongoose.connect('mongodb://localhost:27017/mydb'); // connect to our database
 var Stud = require('./model/stud');
 var Dept = require('./model/emp');
 var Emp = require('./model/dept');
+
 var Book = require('./model/book');
 var Auther = require('./model/author');
+
 var router = express.Router();
 
 app.use(bodyParser.json());
@@ -145,10 +145,18 @@ var server = app.listen(82, function () {
 
 });
 
+
+
+module.exports = app;
+
+router.route('/studs')
+
+
 module.exports = app;
 
 //API For Single Table STUD
 router.route('/studs')
+
     .post(function(req, res) {
 
         var stud = new Stud();
@@ -172,7 +180,24 @@ router.route('/studs')
             res.json(studs);
         });
     });
+
+
 router.route('/studs/:stud_id')
+
+
+
+
+
+
+
+
+
+
+
+
+
+router.route('/studs/:stud_id')
+
 
 // get the bear with that id (accessed at GET http://localhost:8080/api/bears/:bear_id)
     .get(function(req, res) {
@@ -218,7 +243,9 @@ router.route('/studs/:stud_id')
         });
     });
 
+
 //API For TWO Table EMP AND DEPT
+
 
 router.route('/depts')
     .post(function(req, res) {
@@ -271,6 +298,8 @@ router.route('/emps')
             res.json(studs);
         });
     })
+
+
 
 router.route('/emps/:dept_id')
 
@@ -433,6 +462,7 @@ router.route('/book')
     })
 
 })
+
 
 
 
