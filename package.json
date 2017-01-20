@@ -1,11 +1,17 @@
-{
+
   "name": "dbnodeproject",
   "version": "0.0.0",
   "description": "dbnodeproject",
+
+  "name": "mondodbnodeproject",
+  "version": "0.0.0",
+  "description": "mongo db project",
+
   "main": "app.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
+
   "author": "sheetal",
   "license": "ISC",
   "dependencies": {
@@ -13,5 +19,22 @@
     "cookie-parser": "^1.4.3",
     "express": "^4.14.0",
     "mysql": "~2.12.0"
+
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/anuradhasingh980/MongoProject.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/anuradhasingh980/MongoProject/issues"
+  },
+  "homepage": "https://github.com/anuradhasingh980/MongoProject#readme",
+  "dependencies": {
+    "body-parser": "^1.16.0",
+    "cookie-parser": "^1.4.3",
+    "express": "^4.14.0",
+    "mongoose": "^4.7.7"
+
   }
 }
