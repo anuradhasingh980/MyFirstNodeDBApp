@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html ng-app="product">
+<head>
+    <script src = "https://ajax.googleapis.com/ajax/libs/angularjs/1.6.2/angular.min.js"></script>
+      <meta charset="UTF-8">
+    <title>Node/Angular Product app</title>
+    <link rel="stylesheet" href="//netdna.bootstrapcdn.com/bootstrap/3.0.0/css/bootstrap.min.css"><!-- load bootstrap -->
+    <style>
+        html                    { overflow-y:scroll; }
+        body                    { padding-top:50px; }
+        #product-list              { margin-bottom:30px; }
+    </style>
+    <script src="http://ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script><!-- load jquery -->
+    <!-- load angular -->
+    <script src="core.js"></script>
+
+<body ng-controller="mainController">
+<div class="container">
+<div id="product-list" class="row">
+    <div class="col-sm-4 col-sm-offset-4">
+
+        <!-- LOOP OVER THE TODOS IN $scope.todos -->
+        <table>
+            <tr>
+                <th>Name</th>
+                <th>price</th>
+                <th>QTY</th>
+            </tr>
+
+            <tr ng-repeat = "product in products">
+                <td>{{ product.prodname }}</td>
+                <td>{{ product.prodprice }}</td>
+                <td>{{ product.prodqty }}</td>
+            </tr>
+        </table>
+
+    </div>
+</div>
+    <div id="product-form" class="row">
+        <div class="col-sm-8 col-sm-offset-2 text-center">
+            <form>
+                <div class="form-group">
+
+                    <!-- BIND THIS VALUE TO formData.text IN ANGULAR -->
+                    <input type="text" class="form-control input-lg text-center" placeholder="product id" ng-model="formData.prodid">
+                    <br/><input type="text" class="form-control input-lg text-center"  placeholder="product name" ng-model="formData.prodname">
+                    <br/><input type="text" class="form-control input-lg text-center" placeholder="product price" ng-model="formData.prodprice">
+                    <br/><input type="text" class="form-control input-lg text-center" placeholder="product qty" ng-model="formData.prodqty">
+                    <br/><input type="text" class="form-control input-lg text-center" placeholder="product color" ng-model="formData.prodcolor">
+                    <br/><input type="text" class="form-control input-lg text-center" placeholder="product category" ng-model="formData.category">
+
+                    <br/><select name="category" ng-options="category.catename for category in categories track by category.cateid">
+                     </select>
+
+                </div>
+
+                <!-- createToDo() WILL CREATE NEW TODOS -->
+                <button type="submit" class="btn btn-primary btn-lg" ng-click="createProduct()">Add</button>
+            </form>
+        </div>
+    </div>
+</div>
+
+</body>
+</html>
