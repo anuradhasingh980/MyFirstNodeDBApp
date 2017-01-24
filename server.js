@@ -1,9 +1,9 @@
-/**
- * Created by lenovo on 1/23/2017.
- */
+
 var express  = require('express');
 var app      = express();
 var mongoose = require('mongoose');
+var multer  = require('multer')
+
 var morgan = require('morgan');
 var Product = require('./models/product');
 var Category = require('./models/category');
@@ -15,16 +15,13 @@ app.use(bodyParser.urlencoded({'extended':'true'}));            // parse applica
 app.use(bodyParser.json());                                     // parse application/json
 app.use(bodyParser.json({ type: 'application/vnd.api+json' }));
 
-
-// parse application/vnd.api+json as json
-
-app.get('*', function(req, res) {
-    res.sendfile('./public/index.html'); // load the single view file (angular will handle the page changes on the front-end)
-});
+// app.get('*', function(req, res) {
+//     res.sendfile('./public/index1.html'); // load the single view file (angular will handle the page changes on the front-end)
+// });
 
 
 
-var server = app.listen(63342, function () {
+var server = app.listen(81, function () {
 
     var host = server.address().address
     var port = server.address().port
@@ -32,6 +29,14 @@ var server = app.listen(63342, function () {
     console.log("Example app listening at http://%s:%s", host, port)
 
 });
+
+
+
+
+
+
+
+
 app.get('/api/categories', function(req, res) {
 
     // use mongoose to get all todos in the database
@@ -46,15 +51,28 @@ app.get('/api/categories', function(req, res) {
 app.get('/api/products', function(req, res) {
 
     // use mongoose to get all todos in the database
-    Product.find(function(err, products) {
+    Product.find(function(err, data) {
         if (err)
             res.send(err)
 
-        res.json(products);
+        res.json(data);
     });
 });
+var storage = multer.diskStorage({
+    destination: function (request, file, callback) {
+        callback(null, './uploads');
+    },
+    filename: function (request, file, callback) {
+        console.log(file);
+        var filename = file.originalname;
+        request.body.prodimg = filename;
+        callback(null,file.originalname)
+    }
+});
+var upload = multer({storage: storage}).any();
 
-app.post('/api/products', function(req, res) {
+
+app.post('/api/products',upload,function(req, res) {
 
     Product.create({
         prodid : req.body.prodid,
@@ -62,17 +80,18 @@ app.post('/api/products', function(req, res) {
         prodprice:req.body.prodprice,
         prodqty : req.body.prodqty,
         prodcolor : req.body.prodcolor,
-        category : req.body.category
+        prodimg : req.body.prodimg,
+        category : req.body.category,
 
     }, function(err) {
         if (err)
             res.send(err);
-
-        // get and return all the todos after you create another
         Product.find(function(err, products) {
             if (err)
                 res.send(err)
             res.json(products);
+
+
         });
     });
 
@@ -96,15 +115,3 @@ app.post('/api/categories', function(req, res) {
     });
 
 });
-
-
-
-app.get('*', function(req, res) {
-    res.sendfile('./public/index.html');
-});
-
-
-
-
-
-
