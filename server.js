@@ -3,7 +3,6 @@ var express  = require('express');
 var app      = express();
 var mongoose = require('mongoose');
 var multer  = require('multer')
-
 var morgan = require('morgan');
 var Product = require('./models/product');
 var Category = require('./models/category');
@@ -15,10 +14,9 @@ app.use(bodyParser.urlencoded({'extended':'true'}));            // parse applica
 app.use(bodyParser.json());                                     // parse application/json
 app.use(bodyParser.json({ type: 'application/vnd.api+json' }));
 
-// app.get('*', function(req, res) {
-//     res.sendfile('./public/index1.html'); // load the single view file (angular will handle the page changes on the front-end)
-// });
-
+app.get('*', function(req, res) {
+    res.sendfile('./public/index1.html'); // load the single view file (angular will handle the page changes on the front-end)
+});
 
 
 var server = app.listen(81, function () {
@@ -29,13 +27,6 @@ var server = app.listen(81, function () {
     console.log("Example app listening at http://%s:%s", host, port)
 
 });
-
-
-
-
-
-
-
 
 app.get('/api/categories', function(req, res) {
 
@@ -70,8 +61,6 @@ var storage = multer.diskStorage({
     }
 });
 var upload = multer({storage: storage}).any();
-
-
 app.post('/api/products',upload,function(req, res) {
 
     Product.create({
@@ -98,7 +87,6 @@ app.post('/api/products',upload,function(req, res) {
 });
 
 app.post('/api/categories', function(req, res) {
-
     Category.create({
         cateid : req.body.cateid,
         catename : req.body.catename
