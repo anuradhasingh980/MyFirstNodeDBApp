@@ -6,11 +6,14 @@ var Schema = mongoose.Schema;
 
 var prodschema =new Schema({
 
+
+
     prodid:Number,
     prodname : String,
     prodprice : Number,
     prodqty : Number,
     prodcolor :String,
+    prodimg : String,
     category : [{type :Schema.Types.ObjectId,ref :"Category"}]
 
 
