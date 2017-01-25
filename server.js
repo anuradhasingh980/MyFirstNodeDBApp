@@ -7,17 +7,18 @@ var morgan = require('morgan');
 var Product = require('./models/product');
 var Category = require('./models/category');
 var bodyParser = require('body-parser');
+var path = require('path');
 mongoose.connect('mongodb://localhost:27017/mydb');     // connect to mongoDB database on modulus.io
+app.use("/public", express.static(path.join(__dirname, 'public')));
 app.use(express.static(__dirname + '/public'));                 // set the static files location /public/img will be /img for users
-app.use(morgan('dev'));                                         // log every request to the console
+app.use(morgan('dev'));
+
+app.use('./public/core', express.static(__dirname + './public/core'));
+app.use('./public/app', express.static(__dirname + './public/app'));
+// log every request to the console
 app.use(bodyParser.urlencoded({'extended':'true'}));            // parse application/x-www-form-urlencoded
 app.use(bodyParser.json());                                     // parse application/json
 app.use(bodyParser.json({ type: 'application/vnd.api+json' }));
-
-app.get('*', function(req, res) {
-    res.sendfile('./public/index1.html'); // load the single view file (angular will handle the page changes on the front-end)
-});
-
 
 var server = app.listen(81, function () {
 
@@ -27,7 +28,6 @@ var server = app.listen(81, function () {
     console.log("Example app listening at http://%s:%s", host, port)
 
 });
-
 app.get('/api/categories', function(req, res) {
 
     // use mongoose to get all todos in the database
@@ -40,13 +40,11 @@ app.get('/api/categories', function(req, res) {
 });
 
 app.get('/api/products', function(req, res) {
-
     // use mongoose to get all todos in the database
     Product.find(function(err, data) {
         if (err)
             res.send(err)
-
-        res.json(data);
+      res.json(data);
     });
 });
 var storage = multer.diskStorage({
@@ -85,7 +83,31 @@ app.post('/api/products',upload,function(req, res) {
     });
 
 });
+app.delete('/api/categories/:cate_id',function (req, res) {
 
+    Category.remove({_id: req.params.cate_id}, function (err, data) {
+        if (err)
+            res.send(err)
+        else
+            res.json(data)
+    })
+
+})
+app.delete('/api/products/:prod_id', function(req, res) {
+    Product.remove({
+        _id : req.params.prod_id
+    }, function(err, todo) {
+        if (err)
+            res.send(err);
+
+        // get and return all the todos after you create another
+        Product.find(function(err, prod) {
+            if (err)
+                res.send(err)
+            res.json(prod);
+        });
+    });
+});
 app.post('/api/categories', function(req, res) {
     Category.create({
         cateid : req.body.cateid,
