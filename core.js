@@ -1,13 +1,6 @@
-/**
- * Created by lenovo on 1/23/2017.
- */
-var product = angular.module('product', []);
-
-
-function mainController($scope, $http) {
+var app = angular.module("myApp", []);
+app.controller("myCtrl", function ($http, $scope) {
     $scope.formData = {};
-
-    // when landing on the page, get all todos and show them
     $http.get('/api/products')
         .success(function (data) {
             $scope.products = data;
@@ -27,14 +20,28 @@ function mainController($scope, $http) {
             .error(function (data) {
                 console.log('Error: ' + data);
             });
+
+        $http.get('/api/categories')
+            .success(function (data) {
+                $scope.categoryies = data;
+                console.log(data);
+            })
+            .error(function (data) {
+                console.log('Error: ' + data);
+            });
+    }
+
+
+    $scope.deleteProduct = function (id) {
+        $http.delete('/api/products/' + id)
+            .success(function (data) {
+                $scope.products = data;
+                console.log(data);
+            })
+            .error(function (data) {
+                console.log('Error: ' + data);
+            });
     };
 
-    $http.get('/api/categories')
-        .success(function (data) {
-            $scope.categoryies = data;
-            console.log(data);
-        })
-        .error(function (data) {
-            console.log('Error: ' + data);
-        });
-}
+
+});
