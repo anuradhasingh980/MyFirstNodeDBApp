@@ -1,6 +1,5 @@
 <html>
 <head>
-    <!-- META -->
     <meta charset="utf-8">
     <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.4.8/angular.min.js"></script>
     <title>Node/Angular Todo App</title>
@@ -25,8 +24,8 @@
             <td>{{ prod.prodprice }}</td>
             <td>{{ prod.prodqty }}</td>
             <td>{{ prod.prodcolor }}</td>
-            <td>{{ prod.prodimg.name }}</td>
-            <td>{{prod.cateid.toString()}}</td>
+            <td>{{ prod.prodimg }}</td>
+            <td>{{prod.cateid}}</td>
             <td>
                 <button ng-click="deleteProduct(prod._id)" name="delete">Delete</button></td>
               <td>  <button ng-click="editProduct(prod._id)" name="Edit">Edit</button>
@@ -52,16 +51,6 @@
             <br/><input type="text" placeholder="product qty" ng-model="newproduct.prodqty" name="prodqty">
             <br/><input type="text" placeholder="product color" ng-model="newproduct.prodcolor" name="prodcolor">
             <br/>
-            <!--<input-->
-                    <!--type="file"-->
-                    <!--ngf-select-->
-                    <!--ng-model="newproduct.prodimg"-->
-                    <!--name="prodimg"-->
-                    <!--ngf-pattern="'image/*'"-->
-                    <!--accept="image/*"-->
-                    <!--ngf-max-size="20MB"-->
-            <!--/>-->
-            <br/>
             <select name="category" ng-model="newproduct.category" >
                 <option ng-repeat="cate in categories" value="{{cate._id}}">{{cate.catename}} </option>
             </select>
@@ -71,12 +60,7 @@
             <button type="submit" ng-click="updateProduct()">Update</button>
         </form>
     </div>
-
-
 </div>
 <script src="core.js"></script>
-<!--<script src="ng-file-upload-shim.min.js"></script> &lt;!&ndash; for no html5 browsers support &ndash;&gt;-->
-<!--<script src="ng-file-upload.min.js"></script>-->
-
 </body>
 </html>
