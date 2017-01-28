@@ -20,7 +20,7 @@ app.use(bodyParser.urlencoded({'extended':'true'}));            // parse applica
 app.use(bodyParser.json());                                     // parse application/json
 app.use(bodyParser.json({ type: 'application/vnd.api+json' }));
 
-var server = app.listen(81, function () {
+var server = app.listen(82, function () {
 
     var host = server.address().address
     var port = server.address().port
@@ -62,18 +62,18 @@ var upload = multer({storage: storage}).any();
 app.post('/api/products',upload,function(req, res) {
 
     Product.create({
-        prodid : req.body.prodid,
-        prodname : req.body.prodname,
-        prodprice:req.body.prodprice,
-        prodqty : req.body.prodqty,
-        prodcolor : req.body.prodcolor,
-        prodimg : req.body.prodimg,
-        category : req.body.category,
+        prodid: req.body.prodid,
+        prodname: req.body.prodname,
+        prodprice: req.body.prodprice,
+        prodqty: req.body.prodqty,
+        prodcolor: req.body.prodcolor,
+        prodimg: req.body.prodimg,
+        category: req.body.category,
 
-    }, function(err) {
+    }, function (err) {
         if (err)
             res.send(err);
-        Product.find(function(err, products) {
+        Product.find(function (err, products) {
             if (err)
                 res.send(err)
             res.json(products);
@@ -81,18 +81,8 @@ app.post('/api/products',upload,function(req, res) {
 
         });
     });
-
-});
-app.delete('/api/categories/:cate_id',function (req, res) {
-
-    Category.remove({_id: req.params.cate_id}, function (err, data) {
-        if (err)
-            res.send(err)
-        else
-            res.json(data)
-    })
-
 })
+
 app.delete('/api/products/:prod_id', function(req, res) {
     Product.remove({
         _id : req.params.prod_id
@@ -108,6 +98,40 @@ app.delete('/api/products/:prod_id', function(req, res) {
         });
     });
 });
+app.put('/api/products/:prod_id',upload,function(req, res) {
+    Product.findById(req.params.prod_id, function (err, product) {
+
+        if (err)
+            res.send(err);
+        res.send(product)
+
+        product.prodid = req.body.prodid;
+        product.prodname = req.body.prodname;
+        product.prodprice = req.body.prodprice;
+        product.prodqty = req.body.prodqty;
+        product.prodcolor=req.body.prodcolor;
+        product.prodimg = req.body.prodimg;
+        product.category = req.body.category;
+
+        product.save();
+        Product.find(function (err, products) {
+            if (err)
+                res.send(err)
+            res.json(products);
+
+
+        });
+
+    });
+})
+app.get('/api/products/:prod_id',upload,function(req, res) {
+    Product.findById(req.params.prod_id, function (err, product) {
+
+        if (err)
+            res.send(err);
+        res.send(product)
+    })
+})
 app.post('/api/categories', function(req, res) {
     Category.create({
         cateid : req.body.cateid,
