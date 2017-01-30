@@ -1,6 +1,10 @@
-var app = angular.module("myApp", []);
+var app = angular.module("myApp", ['angularUtils.directives.dirPagination']);
 app.controller("myCtrl", function ($http, $scope) {
-    $scope.newproduct={};
+    $scope.sort = function (keyname) {
+        $scope.sortKey = keyname;   //set the sortKey to the param passed
+        $scope.reverse = !$scope.reverse; //if true make it false and vice versa
+    }
+    $scope.newproduct = {};
     $http.get('/api/products')
         .success(function (data) {
             $scope.products = data;
@@ -21,8 +25,6 @@ app.controller("myCtrl", function ($http, $scope) {
             .error(function (data) {
                 console.log('Error: ' + data);
             });
-
-
     }
     $http.get('/api/categories')
         .success(function (data) {
@@ -32,7 +34,7 @@ app.controller("myCtrl", function ($http, $scope) {
         .error(function (data) {
             console.log('Error: ' + data);
         });
- $scope.deleteProduct = function (id) {
+    $scope.deleteProduct = function (id) {
         $http.delete('/api/products/' + id)
             .success(function (data) {
                 $scope.products = data;
@@ -49,14 +51,14 @@ app.controller("myCtrl", function ($http, $scope) {
                 $scope._id = $scope.editproduct._id;
                 $scope.newproduct =
                     {
-                        prodid : $scope.editproduct.prodid,
-                        prodname : $scope.editproduct.prodname,
-                        prodprice :$scope.editproduct.prodprice,
-                        prodqty : $scope.editproduct.prodqty,
-                        prodcolor :$scope.editproduct.prodcolor,
-                        prodimg : $scope.editproduct.prodimg,
-                        category:$scope.editproduct.category
-                }
+                        prodid: $scope.editproduct.prodid,
+                        prodname: $scope.editproduct.prodname,
+                        prodprice: $scope.editproduct.prodprice,
+                        prodqty: $scope.editproduct.prodqty,
+                        prodcolor: $scope.editproduct.prodcolor,
+                        prodimg: $scope.editproduct.prodimg,
+                        category: $scope.editproduct.category
+                    }
 
                 console.log(data);
             })
@@ -67,7 +69,7 @@ app.controller("myCtrl", function ($http, $scope) {
     };
     $scope.updateProduct = function () {
 
-        $http.put('/api/products/'+ $scope._id ,$scope.newproduct)
+        $http.put('/api/products/' + $scope._id, $scope.newproduct)
             .success(function (data) {
                 console.log(data);
             })
@@ -75,6 +77,5 @@ app.controller("myCtrl", function ($http, $scope) {
                 console.log('Error: ' + data);
             });
     };
-
 
 });

@@ -1,57 +1,91 @@
-<html>
+<html xmlns:orderBy="http://www.w3.org/1999/xhtml">
 <head>
     <meta charset="utf-8">
     <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.4.8/angular.min.js"></script>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
     <title>Node/Angular Todo App</title>
 </head>
 <body>
 <div ng-app="myApp" ng-controller="myCtrl">
-    <table border="1">
+    <form class="form-inline" style="padding-left: 27px;padding-top: 10px">
+        <div class="form-group">
+            <label >Search</label>
+            <input type="text" ng-model="search" class="form-control" placeholder="Search">
+        </div>
+    </form>
+    <div class="bs-component" style="padding-right:27px; padding-left: 27px; width:650px">
+    <table border="1" class="table table-striped table-hover">
+        <thead>
         <tr>
-            <th>id</th>
-            <th>prodname</th>
-            <th>price</th>
-            <th>QTY</th>
-            <th>Color</th>
-            <th>Image</th>
-            <th>Category</th>
+            <th ng-click="sort('prodid')">Id
+                <span class="glyphicon sort-icon" ng-show="sortKey=='prodid'" ng-class="{'glyphicon-chevron-up':reverse,'glyphicon-chevron-down':!reverse}"></span>
+            </th>
+            <th ng-click="sort('prodname')">name
+                <span class="glyphicon sort-icon" ng-show="sortKey=='prodname'" ng-class="{'glyphicon-chevron-up':reverse,'glyphicon-chevron-down':!reverse}"></span>
+            </th>
+            <th ng-click="sort('prodprice')">price
+                <span class="glyphicon sort-icon" ng-show="sortKey=='prodprice'" ng-class="{'glyphicon-chevron-up':reverse,'glyphicon-chevron-down':!reverse}"></span>
+            </th>
+            <th ng-click="sort('prodqty')">QTY
+                <span class="glyphicon sort-icon" ng-show="sortKey=='prodqty'" ng-class="{'glyphicon-chevron-up':reverse,'glyphicon-chevron-down':!reverse}"></span>
+            </th>
+            <th ng-click="sort('prodcolor')">color
+                <span class="glyphicon sort-icon" ng-show="sortKey=='prodcolor'" ng-class="{'glyphicon-chevron-up':reverse,'glyphicon-chevron-down':!reverse}"></span>
+            </th>
+            <!--<th>Image</th>-->
             <th>Delete</th>
             <th>Edit</th>
         </tr>
-        <tr ng-repeat="prod in products track by prod._id">
+        </thead>
+        <tr dir-paginate="prod in products|orderBy:sortKey:reverse|filter:search|itemsPerPage:2">
             <td>{{ prod.prodid }}</td>
             <td>{{prod.prodname}}</td>
             <td>{{ prod.prodprice }}</td>
             <td>{{ prod.prodqty }}</td>
             <td>{{ prod.prodcolor }}</td>
-            <td>{{ prod.prodimg }}</td>
-            <td>{{prod.cateid}}</td>
+            <!--<td>{{ prod.prodimg }}</td>-->
+            <!--<td>{{prod.cateid}}</td>-->
             <td>
-                <button ng-click="deleteProduct(prod._id)" name="delete">Delete</button></td>
-              <td>  <button ng-click="editProduct(prod._id)" name="Edit">Edit</button>
+                <button ng-click="deleteProduct(prod._id)" name="delete">Delete</button>
+            </td>
+            <td>
+                <button ng-click="editProduct(prod._id)" name="Edit">Edit</button>
             </td>
         </tr>
+
+
     </table>
-    <table border="1">
+    <dir-pagination-controls max-size="2" direction-links="true" boundary-links="true" >
+    </dir-pagination-controls>
+
+<br/>
+        <hr/>
+    <table border="1" class="table table-striped table-hover">
+        <thead>
         <tr>
-            <th>id</th>
-            <th>prodname</th>
+            <th ng-click="sort('cateid')">Id</th>
+            <th ng-click="sort('catename')">catename</th>
         </tr>
-        <tr ng-repeat="prod in categories track by prod._id">
-            <td>{{ prod.cateid }}</td>
-            <td>{{prod.catename}}</td>
+        <thead>
+        <tr ng-repeat="cate in categories|orderBy:sortKey:reverse">
+            <td> {{cate.cateid}}</td>
+            <td> {{cate.catename}}</td>
         </tr>
+
+
     </table>
-    <div>
+        <br/>
+        <hr/>
+
         <form enctype="multipart/form-data" method="post">
 
-            <input type="text" placeholder="product id" ng-model="newproduct.prodid" name="prodid" >
-            <br/><input type="text" placeholder="product name" ng-model="newproduct.prodname" name="prodname">
-            <br/><input type="text" placeholder="product price" ng-model="newproduct.prodprice" name="prodprice">
-            <br/><input type="text" placeholder="product qty" ng-model="newproduct.prodqty" name="prodqty">
-            <br/><input type="text" placeholder="product color" ng-model="newproduct.prodcolor" name="prodcolor">
+            <input type="text" placeholder="product id" ng-model="newproduct.prodid" name="prodid" class="form-control" >
+            <br/><input type="text" placeholder="product name" ng-model="newproduct.prodname" name="prodname" class="form-control">
+            <br/><input type="text" placeholder="product price" ng-model="newproduct.prodprice" name="prodprice" class="form-control">
+            <br/><input type="text" placeholder="product qty" ng-model="newproduct.prodqty" name="prodqty" class="form-control">
+            <br/><input type="text" placeholder="product color" ng-model="newproduct.prodcolor" name="prodcolor" class="form-control">
             <br/>
-            <select name="category" ng-model="newproduct.category" >
+            <select name="category" ng-model="newproduct.category" class="form-control">
                 <option ng-repeat="cate in categories" value="{{cate._id}}">{{cate.catename}} </option>
             </select>
 
@@ -59,8 +93,10 @@
             <button type="submit" ng-click="createProduct()">Add</button>
             <button type="submit" ng-click="updateProduct()">Update</button>
         </form>
-    </div>
+
+</div>
 </div>
 <script src="core.js"></script>
+<script src="dirPagination.js"> </script>
 </body>
 </html>

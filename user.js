@@ -1,6 +1,4 @@
-/**
- * Created by lenovo on 1/21/2017.
- */
+
 var mongoose = require('mongoose');
 var Schema = mongoose.Schema;
 
