@@ -1,0 +1,67 @@
+<html>
+<head>
+    <title>User Registration</title>
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.4.8/angular.min.js"></script>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+</head>
+<body>
+<div class="jumbotron text-center" ng-app="myApp" ng-controller="userController">
+
+    <div class="bs-component" style="padding-right:15px; padding-left: 15px; width:550px">
+        <h4>User Data</h4>
+        <table border="1" class="table table-striped table-hover">
+            <thead>
+            <tr>
+                <th>Username</th>
+                <th>Mobile</th>
+                <th>Delete</th>
+                <th>Edit</th>
+            </tr>
+            </thead>
+            <tr ng-repeat="u in users">
+                <td>{{ u.name}}</td>
+                <td>{{u.password}}</td>
+                <td>
+                    <button name="delete" ng-click="deleteUser(u._id)">Delete</button>
+                </td>
+                <td>
+                    <button name="Edit" ng-click="editUser(u._id)">Edit</button>
+                </td>
+            </tr>
+        </table>
+        <hr/>
+        <form name="myform">
+
+            <input type="text" placeholder="username" ng-model="userdata.name" name="name" class="form-control"
+                   required>
+            <span ng-show="myform.name.$touched && myform.name.$invalid" style="color: red">Username  is required</span>
+            <br/><input type="password" placeholder="password" ng-model="userdata.password" name="password"
+                        class="form-control" required>
+            <span ng-show="myform.password.$touched && myform.password.$invalid"
+                  style="color: red">Password Required</span>
+            <br/><input type="text" placeholder="Mobile" ng-model="userdata.mobile" name="mobile" class="form-control"
+                        required>
+            <span ng-show="myform.mobile.$touched && myform.mobile.$invalid" style="color: red">Mobile Required</span>
+            <br/>
+            <select name="admin" ng-model="userdata.admin" class="form-control" required>
+                <option value="false">User</option>
+                <option value="true">Admin</option>
+            </select>
+            <span ng-show="myform.admin.$touched && myform.admin.$invalid" style="color: red"> Select Your Role</span>
+
+            <br/><br/><br/>
+            <button name="SignUp" type="submit" style="margin-left: 180px; width: 100px" ng-click="createUser()">
+                SignUp
+            </button>
+            <button name="submit" type="submit" style="margin-left: 180px; width: 100px" ng-click="UpdateUser()">
+                Update
+            </button>
+            <br/><br/>
+            <a href="Login.html"> Login </a>
+
+        </form>
+    </div>
+</div>
+<script src="userController.js"></script>
+</body>
+</html>
