@@ -1,40 +1,25 @@
-<html xmlns:orderBy="http://www.w3.org/1999/xhtml">
+<html>
 <head>
     <meta charset="utf-8">
-
     <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.4.8/angular.min.js"></script>
-    <Script src="angular-route.min.js"></Script>
-    <script src="ng-file-upload-all.min.js"></script>
-    <script src="ng-file-upload-shim.min.js"></script>
-    <script src="app.js"></script>
-    <script src="core.js"></script>
-    <script src="appRoutes.js"></script>
+    <Script src="core.js"></Script>
     <script src="userController.js"></script>
-    <script src="dirPagination.js"> </script>
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
     <title>Node/Angular Todo App</title>
 </head>
 <body>
-<div ng-app="myApp" ng-controller="myCtrl">
+<div ng-app="myApp">
     <div class="container">
-
-        <!-- HEADER -->
         <nav class="navbar navbar-inverse">
             <div class="navbar-header">
-                <a class="navbar-brand" href="user.html">Login/SignUP</a>
+                <a class="navbar-brand" href="UserPage.html">Login/SignUP</a>
             </div>
-
-            <!-- LINK TO OUR PAGES. ANGULAR HANDLES THE ROUTING HERE -->
             <ul class="nav navbar-nav">
                 <li><a href="product.html">Product</a></li>
             </ul>
         </nav>
-
-        <!-- ANGULAR DYNAMIC CONTENT -->
-        <div ng-view></div>
-
     </div>
 </div>
-
+</div>
 </body>
 </html>
