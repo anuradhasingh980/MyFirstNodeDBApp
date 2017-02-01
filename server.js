@@ -9,28 +9,39 @@ var jwt    = require('jsonwebtoken'); // used to create, sign, and verify tokens
 var User   = require('./models/user'); // get our mongoose model
 var config = require('./config')
 var bodyParser = require('body-parser');
+var cookieParser = require('cookie-parser');
+var session  = require('express-session');
 var path = require('path');
+app.use(cookieParser());
 mongoose.connect('mongodb://localhost:27017/mydb');     // connect to mongoDB database on modulus.io
 app.use("/public", express.static(path.join(__dirname, 'public')));
 app.use(express.static(__dirname + '/public'));                 // set the static files location /public/img will be /img for users
 app.use(morgan('dev'));
-app.use('./public/angular-route.min', express.static(__dirname + './public/angular-route.min'));
+app.use('./public/angular-route', express.static(__dirname + './public/angular-route'));
 app.use('./public/ng-file-upload-all.min', express.static(__dirname + './public/ng-file-upload-all.min'));
 app.use('./public/core', express.static(__dirname + './public/core'));
+app.use('./public/app', express.static(__dirname + './public/app'));
+app.use('./public/userController', express.static(__dirname + './public/userController'));
 app.use('./uploads', express.static(__dirname + './public/uploads'));
-// log every request to the console
 app.use(bodyParser.urlencoded({'extended':'true'}));            // parse application/x-www-form-urlencoded
 app.use(bodyParser.json());                                     // parse application/json
 app.use(bodyParser.json({ type: 'application/vnd.api+json' }));
-// use morgan to log requests to the console
-
-
 app.use(morgan('dev'));
 app.set('superSecret', config.secret); // secret variable
 app.get('/', function(req, res) {
-    res.sendFile( __dirname + "/public/" + "index.html" );
+    res.sendFile( __dirname + "/public/" + "UserPage.html");
 });
 
+var usrSession;
+app.use(session({
+    secret: 'appsecret',
+    resave: false,
+    saveUninitialized: true,
+    cookie: {
+        secure: true,
+        maxAge: new Date(Date.now() + 3600000)
+    }
+}));
 var server = app.listen(81, function () {
 
     var host = server.address().address
@@ -99,8 +110,6 @@ app.delete('/api/products/:prod_id', function(req, res) {
     }, function(err, todo) {
         if (err)
             res.send(err);
-
-        // get and return all the todos after you create another
         Product.find(function(err, prod) {
             if (err)
                 res.send(err)
@@ -113,8 +122,7 @@ app.put('/api/products/:prod_id',upload,function(req, res) {
 
         if (err)
             res.send(err);
-        res.send(product)
-
+        res.json(product)
         product.prodid = req.body.prodid;
         product.prodname = req.body.prodname;
         product.prodprice = req.body.prodprice;
@@ -122,11 +130,12 @@ app.put('/api/products/:prod_id',upload,function(req, res) {
         product.prodcolor=req.body.prodcolor;
         product.prodimg = req.body.prodimg;
         product.category = req.body.category;
+        product.save()
+
     });
-})
+});
 app.get('/api/products/:prod_id',upload,function(req, res) {
     Product.findById(req.params.prod_id, function (err, product) {
-
         if (err)
             res.send(err);
         res.send(product)
@@ -162,8 +171,6 @@ app.post('/api/user', function(req, res) {
             res.send(err);
 
         User.find(function(err, users) {
-            if (err)
-                res.send(err)
             res.json(users);
         });
     });
@@ -187,17 +194,15 @@ app.post('/api/authenticate', function(req, res) {
         if (!user) {
             res.json({ success: false, message: 'Authentication failed. User not found.' });
         } else if (user) {
-
-            // check if password matches
+               // check if password matches
             if (user.password != req.body.password) {
                 res.json({ success: false, message: 'Authentication failed. Wrong password.' });
             } else {
-                // if user is found and password is right
-                // create a token
+                usrSession = req.session;
+                usrSession = user;
                 var token = jwt.sign(user, app.get('superSecret'), {
                     expiresIn : 60*60*24 // expires in 24 hours
                 });
-                // return the information including token as JSON
                 res.json({
                     success: true,
                     message: 'Enjoy your token!',
@@ -209,3 +214,49 @@ app.post('/api/authenticate', function(req, res) {
 
     });
 });
+app.get('/api/logout',function(req,res){
+    req.session.destroy(function(err) {
+        if(err) {
+            console.log(err);
+        } else {
+            res.json({msg :"Successfully Logout",
+                islogout:true
+            });
+        }
+    });
+});
+app.delete('/api/user/:user_id', function(req, res) {
+    User.remove({
+        _id : req.params.user_id
+    }, function(err) {
+        if (err)
+            res.send(err);
+        User.find(function(err, user) {
+            if (err)
+                res.send(err)
+            res.json(user);
+        });
+    });
+});
+app.put('/api/user/:user_id',function (req,res) {
+    User.findById(req.params.user_id, function (err, user) {
+        if (err)
+            res.send(err);
+        res.send(user)
+
+        user.name = req.body.name;
+        user.password = req.body.password;
+        user.mobile = req.body.mobile;
+        user.admin = req.body.admin;
+        user.save();
+    });
+});
+app.get('/api/user/:user_id',function (req,res) {
+    User.findById(req.params.user_id, function (err, user) {
+        if (err)
+            res.send(err);
+        res.json(user)
+
+    });
+});
+

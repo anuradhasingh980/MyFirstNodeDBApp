@@ -1,0 +1,34 @@
+<html>
+<head>
+    <title>User Registration</title>
+    <!--<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.4.8/angular.min.js"></script>-->
+    <!--<Script src="angular-route.min.js"></Script>-->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+
+
+</head>
+<body>
+<div class="jumbotron text-center" ng-app="myApp" ng-controller="userController">
+    <div class="bs-component" style="padding-right:15px; padding-left: 15px; width:550px">
+<form name="myform">
+
+    <input type="text" placeholder="username" ng-model="userdata.name" name="username" class="form-control" required >
+    <span ng-show="myform.username.$touched && myform.username.$invalid" style="color: red">Username  is required</span>
+    <br/><input type="password" ng-minlength="7" placeholder="password" ng-model="userdata.password" name="password" class="form-control">
+    <span ng-show="myform.username.$touched && myform.username.$invalid" style="color: red">Password  is required</span>
+    <span ng-show="myform.password.$error.minlength && myform.password.$invalid" style="color: red">Minimum 7 character Required</span>
+
+    <br/>
+    <br/><br/><br/>
+    <button name="Login" style="width: 100px" ng-click="Authenticate()"> Login </button>
+
+
+
+</form>
+</div>
+</div>
+
+<!--<script src="userController.js"></script>-->
+
+</body>
+</html>

@@ -1,5 +1,5 @@
-var app = angular.module("myApp", ['angularUtils.directives.dirPagination']);
-app.controller("myCtrl", function ($http, $scope) {
+var app = angular.module("myApp", ['angularUtils.directives.dirPagination', 'ngFileUpload']);
+app.controller("myCtrl", ['$scope', '$http', 'Upload', '$window', function ($scope, $http, Upload, $window) {
     $scope.sort = function (keyname) {
         $scope.sortKey = keyname;   //set the sortKey to the param passed
         $scope.reverse = !$scope.reverse; //if true make it false and vice versa
@@ -16,16 +16,27 @@ app.controller("myCtrl", function ($http, $scope) {
         });
 
     $scope.createProduct = function () {
-        $http.post('/api/products', $scope.newproduct)
-            .success(function (data) {
-                $scope.newproduct = {};
-                $scope.products = data;
-                console.log(data);
-            })
+        Upload.upload({
+            url: '/api/products',
+            method: 'POST',
+            data: {
+                'prodid': $scope.newproduct.prodid,
+                'prodname': $scope.newproduct.prodname,
+                'prodprice': $scope.newproduct.prodprice,
+                'prodqty': $scope.newproduct.prodqty,
+                'prodcolor': $scope.newproduct.prodcolor,
+                'prodimg': $scope.newproduct.prodimg,
+                'category': $scope.newproduct.category
+            }
+        }).success(function (data) {
+            $scope.newproduct = {};
+            $scope.products = data;
+            console.log(data);
+        })
             .error(function (data) {
-                console.log('Error: ' + data);
-            });
-    }
+                console.log(data)
+            })
+    };
     $http.get('/api/categories')
         .success(function (data) {
             $scope.categories = data;
@@ -69,13 +80,40 @@ app.controller("myCtrl", function ($http, $scope) {
     };
     $scope.updateProduct = function () {
 
-        $http.put('/api/products/' + $scope._id, $scope.newproduct)
+        Upload.upload({
+            url: '/api/products/' + $scope._id,
+            method: 'PUT',
+            data: {
+                'prodid': $scope.newproduct.prodid,
+                'prodname': $scope.newproduct.prodname,
+                'prodprice': $scope.newproduct.prodprice,
+                'prodqty': $scope.newproduct.prodqty,
+                'prodcolor': $scope.newproduct.prodcolor,
+                'prodimg': $scope.newproduct.prodimg,
+                'category': $scope.newproduct.category
+            }
+        }).success(function (data) {
+            $scope.newproduct = {};
+            // $scope.products = data;
+            console.log(data);
+        })
+            .error(function (data) {
+                console.log(data)
+            })
+    };
+    $scope.Logout = function () {
+
+        $http.get('/api/logout')
             .success(function (data) {
-                console.log(data);
+                if (data.islogout == true) {
+                    console.log(data);
+                    $window.location.href = 'Login.html';
+
+                }
             })
             .error(function (data) {
                 console.log('Error: ' + data);
-            });
-    };
 
-});
+            });
+    }
+}]);
