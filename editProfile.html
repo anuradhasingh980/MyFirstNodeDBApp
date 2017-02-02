@@ -1,0 +1,47 @@
+<div class="modal-header">
+    <h3>Edit your Profile!</h3>
+</div>
+<div class="modal-body" style="height: 500px">
+    <form enctype="multipart/form-data" method="post" style="width:350px; height: 50px">
+
+        <input type="text" placeholder="Name" ng-model="newprofile.name" name="name" class="form-control">
+        <br/><br/>
+        <input type="text" placeholder="Email" ng-model="newprofile.email" name="email" class="form-control">
+        <br/><br/>
+        <input type="radio" ng-model="newprofile.gender" name="gender" class="form-control" value="Male">Male
+        <br/>
+        <input type="radio" ng-model="newprofile.gender" name="gender" class="form-control" value="Female">Female
+        <br/>
+        <input type="date" date-format="yyyy-MM-dd" selector="form-control" name="dob" ng-model="newprofile.dob">
+
+        <br/><br/>
+        <!--ng-options="stateItem.id as stateItem.statename for stateItem in states"-->
+        <select name="stateid" ng-model="newprofile.stateid" class="form-control" ng-change="onStateChange()">
+            <option ng-repeat="st in states" value="{{st._id}}"> {{st.statename}}</option>
+        </select>
+        <br/><br/>
+        <select name="cityid" ng-model="newprofile.cityid" class="form-control">
+            <option ng-repeat="ct in city" value="{{ct._id}}">{{ct.cityname}}</option>
+        </select>
+        <br/><br/>
+        <input
+                type="file"
+                ngf-select
+                ng-model="newprofile.profileimg"
+                name="profileimg"
+                ngf-pattern="'image/*'"
+                accept="image/*"
+                ngf-max-size="20MB"
+        />
+        Image thumbnail: <img style="width:100px;" ngf-thumbnail="newprofile.profileimg || '/thumb.jpg'"/>
+        <br/>
+        <br/>
+        <input type="checkbox" ng-model="newprofile.status" name="status" value="true">Active
+        <button type="submit" ng-click="createProfile()">Add</button>
+
+    </form>
+</div>
+<div class="modal-footer">
+    <button type="submit" class="btn btn-primary" ng-click="updateProfile()">OK</button>
+    <button class="btn btn-warning" ng-click="cancel()">Cancel</button>
+</div>
