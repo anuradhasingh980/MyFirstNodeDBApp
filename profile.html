@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<link rel="stylesheet" href="http://netdna.bootstrapcdn.com/bootstrap/3.0.3/css/bootstrap.min.css">
+
+<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.4.8/angular.min.js"></script>
+<script src="http://angular-ui.github.io/bootstrap/ui-bootstrap-tpls-0.9.0.js"></script>
+<script src="ng-file-upload-all.min.js"></script>
+<script src="ng-file-upload-shim.min.js"></script>
+<body ng-app="myapp" ng-controller="stateController" style="width: 200px; padding-right: 50px;padding-left: 50px; padding-top: 10px;">
+
+<table border="1">
+    <thead>
+    <tr>
+        <td>Name</td>
+        <td>Email</td>
+        <td>Gender</td>
+        <td>DOB</td>
+        <td>State</td>
+        <td>City</td>
+        <td>Image</td>
+        <td>Status</td>
+        <td>Delete</td>
+        <td>Edit</td>
+    </tr>
+    </thead>
+    <tbody>
+    <tr ng-repeat="pro in profiles">
+        <td>{{pro.name}}</td>
+        <td>{{pro.email}}</td>
+        <td>{{pro.gender}}</td>
+        <td>{{pro.dob}}</td>
+        <td>{{pro.stateid}}</td>
+        <td>{{pro.cityid}}</td>
+        <td><img src="../uploads/{{pro.profileimg}}" /></td>
+        <td>{{pro.status}}</td>
+        <td> <a href="" ng-click="showForm1(pro._id)"> Delete</a> </td>
+        <td> <a href="" ng-click="showForm(pro._id)">Edit </a> </td>
+    </tr>
+    </tbody>
+</table>
+<hr/>
+
+<form enctype="multipart/form-data" method="post" style="width:350px; height: 50px">
+
+    <input type="text" placeholder="Name" ng-model="newprofile.name" name="name" class="form-control">
+    <br/><br/>
+    <input type="text" placeholder="Email" ng-model="newprofile.email" name="email" class="form-control">
+    <br/><br/>
+    <input type="radio" ng-model="newprofile.gender" name="gender" class="form-control" value="Male">Male
+    <br/>
+    <input type="radio" ng-model="newprofile.gender" name="gender" class="form-control" value="Female">Female
+    <br/>
+    <input type="date" date-format="yyyy-MM-dd" selector="form-control" name="dob" ng-model="newprofile.dob">
+
+    <br/><br/>
+    <!--ng-options="stateItem.id as stateItem.statename for stateItem in states"-->
+    <select name="stateid" ng-model="newprofile.stateid" class="form-control" ng-change="onStateChange()" >
+    <option ng-repeat="st in states"  value = "{{st._id.valueOf(st._id)}}"> {{st.statename}} </option>
+    </select>
+    <br/><br/>
+    <select name="cityid" ng-model="newprofile.cityid" class="form-control" >
+        <option ng-repeat="ct in city" value="{{ct._id}}">{{ct.cityname}}</option>
+    </select>
+    <br/><br/>
+    <input
+            type="file"
+            ngf-select
+            ng-model="newprofile.profileimg"
+            name="profileimg"
+            ngf-pattern="'image/*'"
+            accept="image/*"
+            ngf-max-size="20MB"
+    />
+    Image thumbnail: <img style="width:100px;" ngf-thumbnail="newprofile.profileimg || '/thumb.jpg'"/>
+    <br/>
+    <br/>
+    <input type="checkbox" ng-model="newprofile.status" name="status" value="true">Active
+    <button type="submit" ng-click="createProfile()">Add</button>
+
+</form>
+</body>
+<script src="stateController.js"></script>
+</html>
