@@ -1,0 +1,136 @@
+<div class="row" ng-app="myapp" ng-controller="stateController">
+    <div class="col-lg-15">
+        <div class="card">
+            <div class="card-header">
+                <i class="fa fa-align-justify"></i> Profile Table
+            </div>
+            <div class="card-block">
+                <table class="table table-bordered table-striped table-condensed">
+                    <thead>
+                    <tr>
+                        <th>Name</th>
+                        <th>Email</th>
+                        <th>Gender</th>
+                        <th>DOB</th>
+                        <th>State</th>
+                        <th>City</th>
+                        <th>Profile</th>
+                        <th>Status</th>
+                        <th>Edit</th>
+                        <th>Delete</th>
+
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr ng-repeat="pro in profiles">
+                        <td>{{pro.name}}</td>
+                        <td>{{pro.email}}</td>
+                        <td>{{pro.gender}}</td>
+                        <td>{{pro.dob}}</td>
+                        <td>{{pro.stateid}}</td>
+                        <td>{{pro.cityid}}</td>
+                        <td>{{pro.profileimg}}</td>
+                        <td>{{pro.status}}</td>
+                    </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-sm-8">
+            <div class="card">
+                <div class="card-header">
+                    <strong>Credit Card</strong>
+                    <small>Form</small>
+                </div>
+                <div class="card-block">
+                    <div class="row">
+
+                        <div class="col-sm-12">
+
+                            <div class="form-group">
+                                <label for="name">Name</label>
+                                <input type="text" class="form-control" id="name" placeholder="Enter your name"
+                                       ng-model="newprofile.name">
+                            </div>
+
+                        </div>
+                        <div class="col-sm-12">
+
+                            <div class="form-group">
+                                <label for="name">Email</label>
+                                <input type="text" class="form-control" id="email" placeholder="Enter your name"
+                                       ng-model="newprofile.email">
+                            </div>
+
+                        </div>
+                        <div class="col-sm-8">
+
+                            <div class="form-group">
+                                <label for="name">Gender</label>
+                                <input type="radio" class="form-control" name="gender" placeholder="Enter your name"
+                                       ng-model="newprofile.gender">Male
+                                <input type="radio" class="form-control" name="gender" placeholder="Enter your name"
+                                       ng-model="newprofile.gender">Female
+
+                            </div>
+
+                        </div>
+                        <div class="col-sm-12">
+
+                            <div class="form-group">
+                                <label for="name">state</label>
+                                <select name="stateid" ng-model="newprofile.stateid" class="form-control"
+                                        ng-change="onStateChange(newprofile.stateid)">
+                                    <option ng-repeat="st in states" value="{{st._id.valueOf(st._id)}}">
+                                        {{st.statename}}
+                                    </option>
+                                </select></div>
+
+                        </div>
+                        <div class="col-sm-12">
+
+                            <div class="form-group">
+                                <label for="name">City</label>
+                                <select name="cityid" ng-model="newprofile.cityid" class="form-control">
+                                    <option ng-repeat="ct in stlist" value="{{ct._id}}">{{ct.cityname}}</option>
+                                </select>
+                            </div>
+
+                        </div>
+                        <div class="col-sm-12">
+
+                            <div class="form-group">
+                                <label for="name">Profile image</label>
+                                <div class="form-group">
+                                <input
+                                        type="file"
+                                        ngf-select
+                                        ng-model="newprofile.profileimg"
+                                        name="profileimg"
+                                        ngf-pattern="'image/*'"
+                                        accept="image/*"
+                                        ngf-max-size="20MB"
+                                />
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-sm-12">
+                            <div class="form-group">
+
+                                <button type="button" ng-click="createProfile()" class="btn btn-success btn-lg">Success</button>
+                            </div>
+                        </div>
+
+
+                        </div>
+
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
