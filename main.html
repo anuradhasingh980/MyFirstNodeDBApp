@@ -1,5 +1,21 @@
-<div class="row" ng-app="myapp" ng-controller="stateController">
-    <div class="col-lg-15">
+<div ng-controller="stateController">
+
+    <div class="col-sm-12">
+        <div class="form-group">
+
+            <button type="button" ng-click="showForm2()" class="btn btn-success btn-lg">Add Profile</button>
+        </div>
+    </div>
+
+
+    <form class="form-inline" style="padding-left: 27px;padding-top: 10px">
+        <div class="form-group">
+            <label>Search : </label>
+            <input type="text" ng-model="search" class="form-control" placeholder="Search">
+        </div>
+    </form>
+    <hr/>
+    <div class="col-lg-12">
         <div class="card">
             <div class="card-header">
                 <i class="fa fa-align-justify"></i> Profile Table
@@ -8,129 +24,38 @@
                 <table class="table table-bordered table-striped table-condensed">
                     <thead>
                     <tr>
-                        <th>Name</th>
-                        <th>Email</th>
-                        <th>Gender</th>
-                        <th>DOB</th>
-                        <th>State</th>
-                        <th>City</th>
-                        <th>Profile</th>
-                        <th>Status</th>
+                        <th ng-click="sort('name')">Name </th>
+                        <th ng-click="sort('email')">Email</th>
+                        <th ng-click="sort('gender')">Gender</th>
+                        <th ng-click="sort('dob')">DOB</th>
+                        <!--<th ng-click="sort('stateid')">State</th>-->
+                        <!--<th ng-click="sort('cityid')">City</th>-->
+                        <th ng-click="sort('profileimg')">Profile</th>
+                        <th ng-click="sort('status')">Status</th>
                         <th>Edit</th>
                         <th>Delete</th>
 
                     </tr>
                     </thead>
                     <tbody>
-                    <tr ng-repeat="pro in profiles">
+                    <tr dir-paginate="pro in profiles|orderBy:sortKey:reverse|filter:search|itemsPerPage:4">
                         <td>{{pro.name}}</td>
                         <td>{{pro.email}}</td>
                         <td>{{pro.gender}}</td>
                         <td>{{pro.dob}}</td>
-                        <td>{{pro.stateid}}</td>
-                        <td>{{pro.cityid}}</td>
-                        <td>{{pro.profileimg}}</td>
+                        <!--<td>{{pro.stateid.valueOf(pro.stateid)}}</td>-->
+                        <!--<td>{{pro.cityid}}</td>-->
+                        <td> <img src="../uploads/{{pro.profileimg}}" width="50px" height="50px"/> </td>
                         <td>{{pro.status}}</td>
+                        <td> <button type="button"  ng-click="showForm1(pro._id)" class="btn btn-danger active"> Delete</button> </td>
+                        <td><button type="button" class="btn btn-primary active" ng-click="showForm(pro._id)">Edit </button> </td>
                     </tr>
                     </tbody>
                 </table>
+                <dir-pagination-controls max-size="2" direction-links="true" boundary-links="true">
+                </dir-pagination-controls>
             </div>
         </div>
     </div>
-
-    <div class="row">
-        <div class="col-sm-8">
-            <div class="card">
-                <div class="card-header">
-                    <strong>Credit Card</strong>
-                    <small>Form</small>
-                </div>
-                <div class="card-block">
-                    <div class="row">
-
-                        <div class="col-sm-12">
-
-                            <div class="form-group">
-                                <label for="name">Name</label>
-                                <input type="text" class="form-control" id="name" placeholder="Enter your name"
-                                       ng-model="newprofile.name">
-                            </div>
-
-                        </div>
-                        <div class="col-sm-12">
-
-                            <div class="form-group">
-                                <label for="name">Email</label>
-                                <input type="text" class="form-control" id="email" placeholder="Enter your name"
-                                       ng-model="newprofile.email">
-                            </div>
-
-                        </div>
-                        <div class="col-sm-8">
-
-                            <div class="form-group">
-                                <label for="name">Gender</label>
-                                <input type="radio" class="form-control" name="gender" placeholder="Enter your name"
-                                       ng-model="newprofile.gender">Male
-                                <input type="radio" class="form-control" name="gender" placeholder="Enter your name"
-                                       ng-model="newprofile.gender">Female
-
-                            </div>
-
-                        </div>
-                        <div class="col-sm-12">
-
-                            <div class="form-group">
-                                <label for="name">state</label>
-                                <select name="stateid" ng-model="newprofile.stateid" class="form-control"
-                                        ng-change="onStateChange(newprofile.stateid)">
-                                    <option ng-repeat="st in states" value="{{st._id.valueOf(st._id)}}">
-                                        {{st.statename}}
-                                    </option>
-                                </select></div>
-
-                        </div>
-                        <div class="col-sm-12">
-
-                            <div class="form-group">
-                                <label for="name">City</label>
-                                <select name="cityid" ng-model="newprofile.cityid" class="form-control">
-                                    <option ng-repeat="ct in stlist" value="{{ct._id}}">{{ct.cityname}}</option>
-                                </select>
-                            </div>
-
-                        </div>
-                        <div class="col-sm-12">
-
-                            <div class="form-group">
-                                <label for="name">Profile image</label>
-                                <div class="form-group">
-                                <input
-                                        type="file"
-                                        ngf-select
-                                        ng-model="newprofile.profileimg"
-                                        name="profileimg"
-                                        ngf-pattern="'image/*'"
-                                        accept="image/*"
-                                        ngf-max-size="20MB"
-                                />
-                                </div>
-                            </div>
-                        </div>
-                        <div class="col-sm-12">
-                            <div class="form-group">
-
-                                <button type="button" ng-click="createProfile()" class="btn btn-success btn-lg">Success</button>
-                            </div>
-                        </div>
-
-
-                        </div>
-
-
-                    </div>
-                </div>
-            </div>
-        </div>
     </div>
 </div>
