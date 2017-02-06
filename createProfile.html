@@ -1,0 +1,119 @@
+<div class="modal-header">
+    <h3>Create your Profile!</h3>
+</div>
+<div class="modal-body">
+<div class="row">
+    <div class="col-sm-12">
+        <div class="card">
+            <div class="card-block">
+                <div class="row">
+
+                    <div class="col-sm-12">
+                        <div class="form-group">
+                            <label for="name">Name</label>
+                            <input type="text" class="form-control" id="name" placeholder="Enter your name"
+                                   ng-model="newprofile.name">
+                        </div>
+                    </div>
+                    <div class="col-sm-12">
+
+                        <div class="form-group">
+                            <label for="name">Email</label>
+                            <input type="text" class="form-control" id="email" placeholder="Enter your Email"
+                                   ng-model="newprofile.email">
+                        </div>
+
+                    </div>
+
+
+
+                    <div class="col-sm-8">
+
+                        <div class="form-group row  ">
+                            <label class="col-md-3 form-control-label">Gender</label>
+                            <div class="col-md-9">
+                                <div class="radio">
+                                    <label for="radio1">
+                                        <input type="radio" id="radio1" class="form-control" name="gender"
+                                               ng-model="newprofile.gender" value="Male"> Male
+                                    </label>
+                                    <label for="radio2">
+                                        <input type="radio" id="radio2" class="form-control" name="gender" value="Female"
+                                               ng-model="newprofile.gender">Female
+                                    </label>
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+                    <div class="col-sm-8">
+
+                        <div class="form-group">
+                            <label for="name">Date Of Birth</label>
+
+                            <input type="date" class="form-control" name="dob"
+                                   ng-model="newprofile.dob">
+
+                        </div>
+
+                    </div>
+                    <div class="col-sm-12">
+
+                        <div class="form-group">
+                            <label for="name">state</label>
+                            <select name="stateid" ng-model="newprofile.stateid" class="form-control"
+                                    ng-change="onStateChange(newprofile.stateid)">
+                                <option ng-repeat="st in states" value="{{st._id}}">
+                                    {{st.statename}}
+                                </option>
+                            </select></div>
+
+                    </div>
+                    <div class="col-sm-12">
+
+                        <div class="form-group">
+                            <label for="name">City</label>
+                            <select name="cityid" ng-model="newprofile.cityid" class="form-control">
+                                <option ng-repeat="ct in stlist" value="{{ct._id}}">{{ct.cityname}}</option>
+                            </select>
+                        </div>
+
+                    </div>
+                    <div class="col-sm-12">
+
+                        <div class="form-group">
+                            <label for="name">Profile image</label>
+                            <div class="form-group">
+                                <input
+                                        type="file"
+                                        ngf-select
+                                        ng-model="newprofile.profileimg"
+                                        name="profileimg"
+                                        ngf-pattern="'image/*'"
+                                        accept="image/*"
+                                        ngf-max-size="20MB"
+                                />
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-sm-12">
+
+                        <div class="form-group">
+                            <label for="name">Status</label>
+                            <input type="checkbox" value="True" ng-model="newprofile.status" name="status">Active
+                        </div>
+
+                    </div>
+
+                </div>
+
+
+            </div>
+        </div>
+    </div>
+</div>
+</div>
+<div class="modal-footer">
+    <button type="submit" class="btn btn-primary" ng-click="createProfile()">OK</button>
+    <button class="btn btn-warning" ng-click="cancel()">Cancel</button>
+</div>

@@ -1,25 +1,77 @@
-<html>
+<!--
+ * GenesisUI - Bootstrap 4 Admin Template
+ * @version v1.5.13
+ * @link https://genesisui.com
+ * Copyright (c) 2016 creativeLabs Łukasz Holeczek
+ * @license Commercial
+ -->
+<!DOCTYPE html>
+<html lang="en" ng-app="app">
+
 <head>
+
     <meta charset="utf-8">
-    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.4.8/angular.min.js"></script>
-    <Script src="core.js"></Script>
-    <script src="userController.js"></script>
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
-    <title>Node/Angular Todo App</title>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="Real - Bootstrap 4 Admin Template">
+    <meta name="author" content="Łukasz Holeczek">
+    <meta name="keyword" content="Bootstrap,Admin,Template,Open,Source,AngularJS,Angular,Angular2,jQuery,CSS,HTML,RWD,Dashboard">
+    <link rel="shortcut icon" href="img/favicon.png">
+    <title>Real - Bootstrap 4 Admin Template</title>
+    <!-- Main styles for this application -->
+    <link href="css/style.css" rel="stylesheet">
+
 </head>
-<body>
-<div ng-app="myApp">
-    <div class="container">
-        <nav class="navbar navbar-inverse">
-            <div class="navbar-header">
-                <a class="navbar-brand" href="UserPage.html">Login/SignUP</a>
-            </div>
-            <ul class="nav navbar-nav">
-                <li><a href="product.html">Product</a></li>
-            </ul>
-        </nav>
-    </div>
-</div>
-</div>
+
+<!-- BODY options, add following classes to body to change options
+		1. 'compact-nav'     	  - Switch sidebar to minified version (width 50px)
+		2. 'sidebar-nav'		  - Navigation on the left
+			2.1. 'sidebar-off-canvas'	- Off-Canvas
+				2.1.1 'sidebar-off-canvas-push'	- Off-Canvas which move content
+				2.1.2 'sidebar-off-canvas-with-shadow'	- Add shadow to body elements
+		3. 'fixed-nav'			  - Fixed navigation
+		4. 'navbar-fixed'		  - Fixed navbar
+		5. 'footer-fixed'		  - Fixed navbar
+	-->
+
+<body class="navbar-fixed sidebar-nav fixed-nav">
+
+    <!-- User Interface -->
+    <ui-view></ui-view>
+
+    <!-- Bootstrap and necessary plugins -->
+    <script src="bower_components/jquery/dist/jquery.min.js"></script>
+    <script src="bower_components/tether/dist/js/tether.min.js"></script>
+    <script src="bower_components/bootstrap/dist/js/bootstrap.min.js"></script>
+
+    <!-- AngularJS -->
+    <!--<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.4.8/angular.min.js"></script>-->
+    <script src="bower_components/angular/angular.min.js"></script>
+
+    <!-- AngularJS plugins -->
+    <script src="bower_components/angular-animate/angular-animate.min.js"></script>
+    <script src="bower_components/angular-sanitize/angular-sanitize.min.js"></script>
+    <script src="bower_components/angular-ui-router/release/angular-ui-router.min.js"></script>
+    <script src="bower_components/oclazyload/dist/ocLazyLoad.min.js"></script>
+    <script src="bower_components/angular-translate/angular-translate.min.js"></script>
+    <script src="bower_components/angular-breadcrumb/dist/angular-breadcrumb.min.js"></script>
+    <script src="bower_components/angular-loading-bar/build/loading-bar.min.js"></script>
+    <script src="ng-file-upload-shim.min.js"></script> <!-- for no html5 browsers support -->
+    <script src="ng-file-upload-all.min.js"></script>
+    <script src="http://angular-ui.github.io/bootstrap/ui-bootstrap-tpls-0.9.0.js"></script>
+
+    <!-- AngularJS Real App scripts -->
+    <script src="js/app.js"></script>
+
+    <script src="js/routes.js"></script>
+
+    <script src="js/demo/routes.js"></script>
+
+    <script src="js/controllers.js"></script>
+    <script src="js/directives.js"></script>
+    <script src="js/translations.js"></script>
+    <script src="dirPagination.js"></script>
+
 </body>
+
 </html>

@@ -18,7 +18,10 @@ var app = angular
         'ncy-angular-breadcrumb',
         'angular-loading-bar',
         'ngSanitize',
-        'ngAnimate'
+        'ngAnimate',
+        'ngFileUpload',
+        'ui.bootstrap',
+        'angularUtils.directives.dirPagination'
     ])
     .config(['cfpLoadingBarProvider', function (cfpLoadingBarProvider) {
         cfpLoadingBarProvider.includeSpinner = false;
@@ -32,8 +35,13 @@ var app = angular
         return $rootScope.$stateParams = $stateParams;
     }]);
 app.controller('stateController', stateController)
-stateController.$inject = ['$scope', '$http'];
-function stateController($scope, $http) {
+stateController.$inject = ['$scope', '$http', 'Upload', '$modal'];
+function stateController($scope, $http, Upload, $modal) {
+
+    $scope.sort = function (keyname) {
+        $scope.sortKey = keyname;
+        $scope.reverse = !$scope.reverse;
+    }
     $scope.states = {};
     $scope._id;
     $scope.city = {};
@@ -52,7 +60,6 @@ function stateController($scope, $http) {
 
         })
     }
-
     $http.get('/api/state')
         .then(function (response) {
             $scope.states = response.data;
@@ -64,15 +71,12 @@ function stateController($scope, $http) {
             url: '/api/getcitybyst/' + id,
             method: 'GET'
 
-        }).then(function (data) {
-
-
-            $scope.stlist = data;
+        }).then(function (response) {
+            $scope.stlist = response.data;
 
         });
 
     }
-
     $http.get('/api/city')
         .then(function (response) {
             $scope.city = response.data;
@@ -84,29 +88,6 @@ function stateController($scope, $http) {
             $scope.profiles = response.data;
 
         })
-
-    $scope.createProfile = function () {
-        Upload.upload({
-            url: '/api/profile',
-            method: 'POST',
-            data: {
-                'name': $scope.newprofile.name,
-                'email': $scope.newprofile.email,
-                'gender': $scope.newprofile.gender,
-                'dob': $scope.newprofile.dob,
-                'stateid': $scope.newprofile.stateid,
-                'cityid': $scope.newprofile.cityid,
-                'profileimg': $scope.newprofile.profileimg,
-                'status': $scope.newprofile.status
-            }
-        }).then(function (response) {
-            $scope.newprofile = {};
-            $scope.profiles = response.data;
-            ;
-        })
-
-    };
-
     $scope.editProfile = function (id) {
         $http.get('/api/profile/' + id)
             .then(function (response) {
@@ -124,7 +105,6 @@ function stateController($scope, $http) {
                         status: $scope.newprofile.status
 
                     }
-
 
             })
     };
@@ -181,10 +161,24 @@ function stateController($scope, $http) {
 
                     }
 
-
             })
         var modalInstance = $modal.open({
             templateUrl: 'deleteProfile.html',
+            controller: ModalInstanceCtrl,
+            scope: $scope,
+            resolve: {
+                userForm: function () {
+                    return $scope.userForm;
+                }
+            }
+        });
+    }
+    $scope.showForm2 = function (id) {
+        $scope.message = "Show Form Button Clicked";
+        console.log($scope.message);
+
+        var modalInstance = $modal.open({
+            templateUrl: 'createProfile.html',
             controller: ModalInstanceCtrl,
             scope: $scope,
             resolve: {
@@ -199,6 +193,29 @@ function stateController($scope, $http) {
 var ModalInstanceCtrl = function ($scope, $http, $modalInstance, userForm, Upload) {
 
     ModalInstanceCtrl.$inject = ['Upload', '$http']
+
+    $scope.createProfile = function () {
+        Upload.upload({
+            url: '/api/profile',
+            method: 'POST',
+            data: {
+                'name': $scope.newprofile.name,
+                'email': $scope.newprofile.email,
+                'gender': $scope.newprofile.gender,
+                'dob': $scope.newprofile.dob,
+                'stateid': $scope.newprofile.stateid,
+                'cityid': $scope.newprofile.cityid,
+                'profileimg': $scope.newprofile.profileimg,
+                'status': $scope.newprofile.status
+            }
+        }).then(function (response) {
+            $modalInstance.dismiss();
+            $scope.GetAllProfile();
+
+        })
+
+    };
+
 
     $scope.deleteProfile = function () {
         $http({
