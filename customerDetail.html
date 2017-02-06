@@ -1,0 +1,31 @@
+<div style="padding:50px;">
+    <center>
+
+        <input type="button" class="btn" value="Add New Customer" ng-click="showForm()">
+
+        <div style="width: 500px; " ng-controller="CustomerController">
+            <h1>Customer Detail </h1>
+           <table border="1" class="table table-striped table-hover">
+               <thead>
+               <tr>
+               <tr>
+                   <th ng-click="sort('name')">Name </th>
+                   <th ng-click="sort('parent')">Parent</th>
+                   <th ng-click="sort('customerimg')">Profile</th>
+                   <th>Edit</th>
+                   <th>Delete</th>
+               </tr>
+               </thead>
+               <tbody>
+               <tr ng-repeat="cust in customerdt|orderBy:sortKey:reverse">
+                   <td> {{cust.name}}</td>
+                   <td> {{cust.parent}}</td>
+                   <td><img src="./uploads/{{cust.customerimg}}" height="50px" width="50px  "/></td>
+                   <td><a href=""  ng-click="showForm2(cust._id)">Edit </a> </td>
+                   <td><a href="" ng-click="showForm1(cust._id)">Delete </a> </td>
+               </tr>
+               </tbody>
+           </table>
+        </div>
+    </center>
+</div>
