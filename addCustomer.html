@@ -2,16 +2,14 @@
     <h3>Create your Profile!</h3>
 </div>
 <div class="modal-body">
+
     <div style="padding:10px;">
     <center>
         <div style="width: 250px; height: 150px ">
             <form enctype="multipart/form-data" method="post">
 
                 <input type="text"  ng-model="formData.name" placeholder="Enter name" class="form-control" name="name"><br/>
-                <!--<select ng-model="formData.parent" class="form-control" name="parent">-->
-                    <!--<option ng-repeat="cust in customerdt" value="{{cust.name}}"> {{cust.name}}</option>-->
-                <!--</select>-->
-                <input type="text" ng-model="formData.parent" placeholder="parent Name" typeahead="name for name in names|filter:$viewValue" class="form-control" value="name">
+                <input type="text" ng-model="formData.parent" list="namelist" placeholder="parent Name" class="form-control" value="name">
                 <br/>
                 <input
                         type="file"
@@ -33,3 +31,7 @@
     <button type="submit" class="btn btn-primary" ng-click="createProfile()">OK</button>
     <button class="btn btn-warning" ng-click="cancel()">Cancel</button>
 </div>
+<hr/>
+<datalist id='namelist'  class="form-control" name="parent" disabled="true">
+    <option ng-repeat="cust in names" value="{{cust.name}}"> {{cust.name}}</option>
+</datalist>
