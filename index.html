@@ -1,41 +1,22 @@
-
-<html ng-app="app">
+<html ng-app="login">
 <head>
-    <title>AngularJS Website</title>
+    <title>Login Page</title>
     <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.3.0-rc.1/angular.min.js"></script>
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
-    <script src="http://angular-ui.github.io/bootstrap/ui-bootstrap-tpls-0.9.0.js"></script>
-    <script src="ng-file-upload-shim.min.js"></script> <!-- for no html5 browsers support -->
-    <script src="ng-file-upload-all.min.js"></script>
 </head>
 <body>
-<!-- top -->
-<header id="header">
-    <h1 id="logo"><a href="#/home"></a></h1>
-    <div class="container">
-        <nav class="navbar navbar-inverse">
-            <div class="navbar-header">
-                <a class="navbar-brand" href="#/">MLMProject</a>
-            </div>
-            <ul class="nav navbar-nav">
-              <li> <a href="#/login">Login</a></li>
-                <li> <a href="#/customer">Customer</a></li>
-
-            </ul>
-        </nav>
-    </div>
-    <div class="color"></div>
-    <div class="clear"></div>
-</header>
-<!-- //top -->
-<div class="shadow"></div>
-
-<div id="container">
-    <div ng-view></div>
+<div style="padding:50px;">
+    <center>
+        <div style="width: 300px; height: 250px " ng-controller="LoginController">
+            <h1>Login </h1>
+            <form>
+                <input type="text" ng-model="username" placeholder="Enter Username" class="form-control"><br/>
+                <input type="password" ng-model="password" placeholder="Enter Password" class="form-control"><br/>
+                <input type="button" value="Login" class="btn" ng-click="login()">
+            </form>
+        </div>
+    </center>
 </div>
-<script src="app.js"></script>
-
-<script src="https://code.angularjs.org/1.3.0-rc.1/angular-route.min.js"></script>
-
+<script src="js/login.js"></script>
 </body>
 </html>

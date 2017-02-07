@@ -1,0 +1,47 @@
+
+<html ng-app="app">
+<head>
+    <title>AngularJS Website</title>
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.3.0-rc.1/angular.min.js"></script>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+    <script src="http://angular-ui.github.io/bootstrap/ui-bootstrap-tpls-0.9.0.js"></script>
+    <script src="js/ng-file-upload-shim.min.js"></script> <!-- for no html5 browsers support -->
+    <script src="js/ng-file-upload-all.min.js"></script>
+</head>
+<body>
+<!-- top -->
+<header id="header">
+    <h1 id="logo"><a href="#/home"></a></h1>
+    <!--<div class="container">-->
+    <nav class="navbar navbar-inverse">
+        <div class="container-fluid">
+            <div class="navbar-header">
+                <a class="navbar-brand" href="/#">MLMProject</a>
+            </div>
+            <ul class="nav navbar-nav">
+                <!--<li class="active"><a href="#/">Login</a></li>-->
+                <li class="dropdown"><a class="dropdown-toggle" data-toggle="dropdown" href="#">Customer  <span class="caret"></span></a>
+                    <ul class="dropdown-menu">
+                        <li><a href="#/customer">Customer Detail</a></li>
+                        <li><a href="#/customerReport">Customer Report</a></li>
+                    </ul>
+                </li>
+            </ul>
+        </div>
+    </nav>
+    <!--</div>-->
+    <div class="color"></div>
+    <div class="clear"></div>
+</header>
+<!-- //top -->
+<div class="shadow"></div>
+
+<div id="container">
+    <div ng-view></div>
+</div>
+<script src="js/app.js"></script>
+<script src="https://code.angularjs.org/1.3.0-rc.1/angular-route.min.js"></script>
+<script src="js/dirPagination.js"></script>
+
+</body>
+</html>
