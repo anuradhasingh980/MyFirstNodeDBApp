@@ -1,0 +1,37 @@
+<div class="modal-header">
+    <h3>Create your Profile!</h3>
+</div>
+<div class="modal-body">
+
+    <div style="padding:10px;">
+    <center>
+        <div style="width: 250px; height: 150px ">
+            <form enctype="multipart/form-data" method="post">
+
+                <input type="text"  ng-model="formData.name" placeholder="Enter name" class="form-control" name="name"><br/>
+                <input type="text" ng-model="formData.parent" list="namelist" placeholder="parent Name" class="form-control" value="name">
+                <br/>
+                <input
+                        type="file"
+                        ngf-select
+                        ng-model="formData.customerimg"
+                        name="customerimg"
+                        ngf-pattern="'image/*'"
+                        accept="image/*"
+                        ngf-max-size="20MB"
+                        class="form-control"
+                />
+
+            </form>
+        </div>
+    </center>
+</div>
+</div>
+<div class="modal-footer">
+    <button type="submit" class="btn btn-primary" ng-click="createProfile()">OK</button>
+    <button class="btn btn-warning" ng-click="cancel()">Cancel</button>
+</div>
+<hr/>
+<datalist id='namelist'  class="form-control" name="parent" disabled="true">
+    <option ng-repeat="cust in names" value="{{cust.name}}"> {{cust.name}}</option>
+</datalist>
