@@ -1,9 +1,18 @@
 <div style="padding:50px;">
     <center>
 
+
         <input type="button" class="btn" value="Add New Customer" ng-click="showForm()">
 
-        <div style="width: 500px; " ng-controller="CustomerController">
+
+        <form class="form-inline" style="padding-left: 27px;padding-top: 10px">
+            <div class="form-group" style="padding-right: 80px">
+                <label>Search : </label>
+                <input type="text" ng-model="search" class="form-control" placeholder="Search" style="width: 280px;">
+            </div>
+        </form>
+
+        <div style="width: 500px;" ng-controller="CustomerController">
             <h1>Customer Detail </h1>
            <table border="1" class="table table-striped table-hover">
                <thead>
@@ -17,7 +26,7 @@
                </tr>
                </thead>
                <tbody>
-               <tr ng-repeat="cust in customerdt|orderBy:sortKey:reverse">
+               <tr dir-paginate="cust in customerdt|orderBy:sortKey:reverse|filter:search|itemsPerPage:3">
                    <td> {{cust.name}}</td>
                    <td> {{cust.parent}}</td>
                    <td><img src="./uploads/{{cust.customerimg}}" height="50px" width="50px  "/></td>
@@ -25,7 +34,10 @@
                    <td><a href="" ng-click="showForm1(cust._id)">Delete </a> </td>
                </tr>
                </tbody>
+
            </table>
+            <dir-pagination-controls max-size="2" direction-links="true" boundary-links="true">
+            </dir-pagination-controls>
         </div>
     </center>
 </div>
